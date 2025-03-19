@@ -1,290 +1,150 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import Nav from "../../components/Nav";
-import AnimatedTitle from "../../components/AnimatedTitle";
+import { useState } from 'react';
 
-export default function EventsPage() {
-  const [activeTab, setActiveTab] = useState("when");
-  
-  return (
-    <div className="flex flex-col h-screen bg-black overflow-hidden">
-      <header className="pt-4 px-4 text-center">
-        <Link href="/">
-          <AnimatedTitle 
-            text="THE WORLD'S LARGEST HACKATHON" 
-            className="text-3xl md:text-4xl text-gray-100 mb-0"
-          />
-        </Link>
-        <Nav variant="dark" />
-      </header>
-
-      <main className="flex-grow flex flex-col px-4 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto w-full h-[calc(100vh-220px)] flex flex-col">
-          {/* Event content with sidebar and content area */}
-          <div className="flex flex-1 mt-4 h-full overflow-hidden">
-            {/* Sidebar Menu - made responsive */}
-            <EventSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-            
-            {/* Main Content Area - with overflow scrolling */}
-            <EventContent activeTab={activeTab} />
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+// Event type definition
+interface Event {
+  id: number;
+  title: string;
+  date: string;
+  time: string;
+  description: string;
+  location: string;
 }
 
-// Sidebar menu component
-function EventSidebar({ 
-  activeTab, 
-  setActiveTab 
-}: { 
-  activeTab: string, 
-  setActiveTab: (tab: string) => void 
-}) {
+// Sample events data
+const eventsData: Event[] = [
+  {
+    id: 1,
+    title: "Opening Ceremony",
+    date: "June 15, 2023",
+    time: "10:00 AM",
+    description: "Join us for the grand opening of The World's Largest Hackathon, featuring inspiring keynotes from industry leaders and a preview of what's to come.",
+    location: "Main Stage"
+  },
+  {
+    id: 2,
+    title: "Workshop: AI & Machine Learning",
+    date: "June 15, 2023",
+    time: "2:00 PM",
+    description: "Learn how to leverage AI and ML in your hackathon projects with practical examples and expert guidance.",
+    location: "Workshop Room A"
+  },
+  {
+    id: 3,
+    title: "Networking Mixer",
+    date: "June 16, 2023",
+    time: "7:00 PM",
+    description: "Connect with fellow participants, mentors, and sponsors in a relaxed setting with refreshments provided.",
+    location: "Social Hall"
+  },
+  {
+    id: 4,
+    title: "Technical Talk: Scaling Web Applications",
+    date: "June 17, 2023",
+    time: "11:00 AM",
+    description: "Discover best practices for building applications that can scale to millions of users without breaking.",
+    location: "Workshop Room B"
+  },
+  {
+    id: 5,
+    title: "Submission Deadline",
+    date: "June 17, 2023",
+    time: "6:00 PM",
+    description: "Final deadline for all project submissions. Make sure your code is committed and your demo is ready!",
+    location: "Online"
+  },
+  {
+    id: 6,
+    title: "Closing Ceremony & Awards",
+    date: "June 18, 2023",
+    time: "3:00 PM",
+    description: "Celebrate the achievements of all participants and find out which projects won in various categories.",
+    location: "Main Stage"
+  }
+];
+
+export default function Events() {
+  const [selectedDay, setSelectedDay] = useState<string>("All");
+  
+  // Filter events by day if a specific day is selected
+  const filteredEvents = selectedDay === "All" 
+    ? eventsData 
+    : eventsData.filter(event => event.date.includes(selectedDay));
+  
+  // Get unique days from events
+  const uniqueDays = [...new Set(eventsData.map(event => {
+    const dateParts = event.date.split(", ");
+    return dateParts[0]; // Return just the day part
+  }))];
+  
   return (
-    <div className="w-28 md:w-40 pr-2 md:pr-4 flex-shrink-0">
-      <nav className="space-y-6 md:space-y-8">
-        <SidebarItem 
-          id="when" 
-          label="When" 
-          isActive={activeTab === "when"} 
-          onClick={() => setActiveTab("when")} 
-        />
-        <SidebarItem 
-          id="who" 
-          label="Who" 
-          isActive={activeTab === "who"} 
-          onClick={() => setActiveTab("who")} 
-        />
-        <SidebarItem 
-          id="prize" 
-          label="Prize" 
-          isActive={activeTab === "prize"} 
-          onClick={() => setActiveTab("prize")} 
-        />
-      </nav>
+    <div className="p-8 text-white overflow-y-auto scrollbar-thin h-full">
+      <h1 className="text-4xl font-bold mb-6 font-golos-800">Events Schedule</h1>
+      
+      {/* Day filter buttons */}
+      <div className="mb-8 flex flex-wrap gap-2">
+        <button 
+          onClick={() => setSelectedDay("All")}
+          className={`px-4 py-2 rounded-full font-golos-500 ${selectedDay === "All" 
+            ? "bg-white text-black" 
+            : "bg-gray-800 text-white"}`}
+        >
+          All Days
+        </button>
+        {uniqueDays.map((day: string) => (
+          <button 
+            key={day}
+            onClick={() => setSelectedDay(day)}
+            className={`px-4 py-2 rounded-full font-golos-500 ${selectedDay === day 
+              ? "bg-white text-black" 
+              : "bg-gray-800 text-white"}`}
+          >
+            {day}
+          </button>
+        ))}
+      </div>
+      
+      {/* Events list */}
+      <div className="max-w-4xl space-y-6">
+        {filteredEvents.map((event: Event) => (
+          <div key={event.id} className="bg-gray-800 p-6 rounded-lg">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+              <div>
+                <h2 className="text-2xl font-bold font-golos-600">{event.title}</h2>
+                <div className="text-gray-300 mt-2">
+                  <div className="flex items-center">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    {event.date}
+                  </div>
+                  <div className="flex items-center mt-1">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    {event.time}
+                  </div>
+                  <div className="flex items-center mt-1">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    {event.location}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-4 md:mt-0">
+                <button className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded font-golos-500">
+                  Add to Calendar
+                </button>
+              </div>
+            </div>
+            <p className="mt-4">{event.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
-
-// Sidebar item component
-function SidebarItem({ 
-  id, 
-  label, 
-  isActive,
-  onClick
-}: { 
-  id: string, 
-  label: string, 
-  isActive: boolean,
-  onClick: () => void
-}) {
-  return (
-    <div 
-      className={`text-lg md:text-xl font-bold cursor-pointer transition-colors ${
-        isActive 
-          ? 'text-red-600 relative before:absolute before:left-[-15px] before:top-1/2 before:transform before:-translate-y-1/2 before:w-2 md:before:w-3 before:h-2 md:before:h-3 before:bg-red-600 before:rounded-full' 
-          : 'text-gray-300 hover:text-white'
-      }`}
-      onClick={onClick}
-    >
-      {label}
-    </div>
-  );
-}
-
-// Main content area component
-function EventContent({ activeTab }: { activeTab: string }) {
-  const contentContainerClass = "flex-1 pl-6 md:pl-12 border-l border-gray-700 h-full overflow-y-auto scrollbar-thin";
-  
-  // Render different content based on the active tab
-  if (activeTab === "prize") {
-    return (
-      <div className={contentContainerClass}>
-        <div className="space-y-6 pb-16">
-          <h3 className="text-xl md:text-2xl font-bold text-white pt-2 sticky top-0 bg-black">
-            $75,000 in Total Prizes
-          </h3>
-          
-          <div className="space-y-4">
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Grand Prize</h4>
-              <p className="text-sm md:text-base text-gray-300">$30,000 + Investor introductions + Accelerator placement</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Runner-up</h4>
-              <p className="text-sm md:text-base text-gray-300">$15,000 + Cloud credits + Development support</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Best Technical Innovation</h4>
-              <p className="text-sm md:text-base text-gray-300">$10,000 + Hardware packages</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Best Design</h4>
-              <p className="text-sm md:text-base text-gray-300">$5,000 + Professional design tools and mentorship</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Best Social Impact</h4>
-              <p className="text-sm md:text-base text-gray-300">$5,000 + NGO partnerships</p>
-            </div>
-            
-            {/* Added more content to demonstrate scrolling */}
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Special Categories</h4>
-              <p className="text-sm md:text-base text-gray-300">
-                Additional prizes for AI Innovation, Sustainability, Healthcare Solutions, and more specialized categories
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Sponsor Prizes</h4>
-              <p className="text-sm md:text-base text-gray-300">
-                Various prizes from our technology partners including cloud credits, hardware, and software licenses
-              </p>
-            </div>
-            
-            {/* Additional content to ensure scrolling is visible */}
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Community Awards</h4>
-              <p className="text-sm md:text-base text-gray-300">
-                Peer-voted awards for Most Helpful Team, Best Presentation, and Most Creative Solution
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Global Recognition</h4>
-              <p className="text-sm md:text-base text-gray-300">
-                Winning projects will be featured in tech publications and showcased at industry conferences worldwide
-              </p>
-            </div>
-            
-            {/* Even more content to ensure scrolling is clearly visible */}
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Mentorship Opportunities</h4>
-              <p className="text-sm md:text-base text-gray-300">
-                Top teams receive 3 months of mentorship from industry leaders and startup accelerators
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Investment Potential</h4>
-              <p className="text-sm md:text-base text-gray-300">
-                Venture capitalists will be present at the final ceremony looking for promising projects to invest in
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">International Exposure</h4>
-              <p className="text-sm md:text-base text-gray-300">
-                Winners will have the opportunity to present their projects at international tech conferences
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  if (activeTab === "when") {
-    return (
-      <div className={contentContainerClass}>
-        <div className="space-y-6 pb-16">
-          <h3 className="text-xl md:text-2xl font-bold text-white pt-2 sticky top-0 bg-black">
-            March 15-17, 2024
-          </h3>
-          
-          <div className="space-y-4">
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Day 1 - March 15</h4>
-              <p className="text-sm md:text-base text-gray-300">Team registration, keynote speakers, and hackathon kickoff</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Day 2 - March 16</h4>
-              <p className="text-sm md:text-base text-gray-300">Full day of hacking, workshops, and mentorship sessions</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Day 3 - March 17</h4>
-              <p className="text-sm md:text-base text-gray-300">Project submission, demos, judging, and award ceremony</p>
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="text-lg md:text-xl font-semibold text-white">Location</h4>
-            <p className="text-sm md:text-base text-gray-300">Tech Innovation Center, Palo Alto</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  if (activeTab === "who") {
-    return (
-      <div className={contentContainerClass}>
-        <div className="space-y-6 pb-16">
-          <h3 className="text-xl md:text-2xl font-bold text-white pt-2 sticky top-0 bg-black">
-            Participants
-          </h3>
-          
-          <p className="text-sm md:text-base text-gray-300">
-            Our hackathon attracts a diverse community of innovators:
-          </p>
-          
-          <div className="space-y-4">
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Developers</h4>
-              <p className="text-sm md:text-base text-gray-300">Software engineers, full-stack developers, mobile specialists, and more</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Designers</h4>
-              <p className="text-sm md:text-base text-gray-300">UX/UI designers, graphic artists, and creative minds</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Entrepreneurs</h4>
-              <p className="text-sm md:text-base text-gray-300">Startup founders, product managers, and business innovators</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Students</h4>
-              <p className="text-sm md:text-base text-gray-300">From high school to graduate level, representing the next generation of tech talent</p>
-            </div>
-          </div>
-          
-          <h3 className="text-xl md:text-2xl font-bold text-white pt-6">
-            Judges & Mentors
-          </h3>
-          
-          <div className="space-y-4">
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Industry Leaders</h4>
-              <p className="text-sm md:text-base text-gray-300">CTOs and executives from leading tech companies</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Venture Capitalists</h4>
-              <p className="text-sm md:text-base text-gray-300">Investors looking for the next big innovation</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg md:text-xl font-semibold text-white">Technical Experts</h4>
-              <p className="text-sm md:text-base text-gray-300">Specialized engineers and developers to help guide your project</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  // Default fallback (should never reach here with the current implementation)
-  return null;
 } 

@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #0F172A;
-  --foreground: #F8FAFC;
+  --background: #000000;
+  --foreground: #FFFFFF;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -18,10 +18,83 @@
   }
 }
 
+/* Font families */
+.font-krona {
+  font-family: 'Krona One', sans-serif;
+}
+
+.font-golos {
+  font-family: 'Golos Text', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* Golos Text weight variations */
+.font-golos-400 {
+  font-family: 'Golos Text', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-golos-500 {
+  font-family: 'Golos Text', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.font-golos-600 {
+  font-family: 'Golos Text', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.font-golos-700 {
+  font-family: 'Golos Text', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.font-golos-800 {
+  font-family: 'Golos Text', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.font-golos-900 {
+  font-family: 'Golos Text', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans);
+  overflow: hidden;
+  font-family: 'Golos Text', sans-serif;
+}
+
+/* Custom scrollbar for elements that need it */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #555555;
 }
 
 @layer components {
@@ -128,4 +201,14 @@ body {
   .btn-secondary:hover {
     box-shadow: 0 0 5px #A855F7, 0 0 20px #A855F7;
   }
+}
+
+/* Add animation for the project cards */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-in-out forwards;
 }
