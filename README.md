@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TechFusion Hackathon Website
+
+A modern, futuristic website for a hackathon event, featuring information about the hackathon, events schedule, and a dynamic project submission system.
+
+## Features
+
+- **Modern Dark Theme** with neon accents and futuristic design
+- **Responsive Design** that works on mobile, tablet, and desktop
+- **Dynamic Project Submissions** using Supabase as the backend
+- **Multiple Pages** including:
+  - Homepage with event overview
+  - About page with information about judges, sponsors, and partners
+  - Events page with detailed schedule
+  - Projects showcase page
+  - Individual project detail pages
+  - Project submission form
+
+## Tech Stack
+
+- **Frontend**: Next.js 14+ with React 19
+- **Styling**: Tailwind CSS
+- **Backend**: Supabase for database and storage
+- **Deployment**: Ready for Vercel deployment
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ and npm
+
+### Installation
+
+1. Clone this repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/hackathon-website.git
+cd hackathon-website
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env.local` file at the root of the project with your Supabase credentials:
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project-url.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the website.
 
-To learn more about Next.js, take a look at the following resources:
+## Supabase Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To fully utilize the project submission functionality, you need to set up a Supabase project:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Create a Supabase account and a new project
+2. Create a `projects` table with the following columns:
+   - `id` (int, primary key, auto-increment)
+   - `username` (text)
+   - `social_link` (text)
+   - `title` (text)
+   - `project_link` (text)
+   - `description` (text)
+   - `image_url` (text)
+   - `created_at` (timestamp with time zone)
+3. Update the `.env.local` file with your Supabase project URL and anon key
 
-## Deploy on Vercel
+## Customization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Colors and theme settings can be modified in `tailwind.config.js`
+- Global styles are in `app/globals.css`
+- Page-specific content can be updated in the respective page files
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+This project is ready to be deployed on Vercel:
+
+1. Push your code to a GitHub repository
+2. Import the repository into Vercel
+3. Add your environment variables
+4. Deploy!
+
+## License
+
+MIT

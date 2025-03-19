@@ -1,11 +1,10 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
+  --background: #0F172A;
+  --foreground: #F8FAFC;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -22,5 +21,111 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans);
+}
+
+@layer components {
+  .neon-text-blue {
+    color: #38BDF8;
+    text-shadow: 0 0 5px #38BDF8, 0 0 15px #38BDF8;
+  }
+  
+  .neon-text-purple {
+    color: #A855F7;
+    text-shadow: 0 0 5px #A855F7, 0 0 15px #A855F7;
+  }
+  
+  .neon-text-pink {
+    color: #EC4899;
+    text-shadow: 0 0 5px #EC4899, 0 0 15px #EC4899;
+  }
+  
+  .neon-text-green {
+    color: #4ADE80;
+    text-shadow: 0 0 5px #4ADE80, 0 0 15px #4ADE80;
+  }
+  
+  .neon-text-yellow {
+    color: #FACC15;
+    text-shadow: 0 0 5px #FACC15, 0 0 15px #FACC15;
+  }
+  
+  .neon-border {
+    position: relative;
+  }
+  
+  .neon-border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid transparent;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  
+  .neon-border-blue::after {
+    border-color: #38BDF8;
+    box-shadow: 0 0 5px #38BDF8, 0 0 15px #38BDF8;
+  }
+  
+  .neon-border-purple::after {
+    border-color: #A855F7;
+    box-shadow: 0 0 5px #A855F7, 0 0 15px #A855F7;
+  }
+  
+  .neon-border-pink::after {
+    border-color: #EC4899;
+    box-shadow: 0 0 5px #EC4899, 0 0 15px #EC4899;
+  }
+  
+  .neon-border-green::after {
+    border-color: #4ADE80;
+    box-shadow: 0 0 5px #4ADE80, 0 0 15px #4ADE80;
+  }
+  
+  .neon-border-yellow::after {
+    border-color: #FACC15;
+    box-shadow: 0 0 5px #FACC15, 0 0 15px #FACC15;
+  }
+  
+  .card {
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition-property: all;
+    transition-duration: 300ms;
+    background-color: #1E293B;
+  }
+  
+  .btn {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition-property: all;
+    transition-duration: 300ms;
+  }
+  
+  .btn-primary {
+    background-color: #38BDF8;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    box-shadow: 0 0 5px #38BDF8, 0 0 20px #38BDF8;
+  }
+  
+  .btn-secondary {
+    background-color: transparent;
+    border: 1px solid #A855F7;
+    color: white;
+  }
+  
+  .btn-secondary:hover {
+    box-shadow: 0 0 5px #A855F7, 0 0 20px #A855F7;
+  }
 }

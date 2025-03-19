@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Nav from "../components/Nav";
-import AnimatedTitle from "../components/AnimatedTitle";
+import Nav from "../../components/Nav";
+import AnimatedTitle from "../../components/AnimatedTitle";
 
 // Colors for the occupied squares
 const projectColors = ["#FACC15", "#38BDF8", "#FB7185", "#4ADE80", "#A78BFA"];
@@ -33,7 +33,7 @@ function generateDummyProjects(count = 100): Project[] {
   return projects;
 }
 
-export default function Home() {
+export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [gridSize, setGridSize] = useState(316); // ~ sqrt(100,000)
   const [visiblePixels, setVisiblePixels] = useState(1000); // Number of pixels visible at once
@@ -167,10 +167,12 @@ export default function Home() {
       {/* Header - Overlaid on top of grid */}
       <header className="absolute top-0 left-0 right-0 py-4 px-4 text-center z-10">
         <div className="bg-black bg-opacity-60 py-2 px-4 rounded-lg inline-block">
-          <AnimatedTitle 
-            text="THE WORLD'S LARGEST HACKATHON" 
-            className="text-3xl md:text-4xl text-gray-100 mb-0"
-          />
+          <Link href="/">
+            <AnimatedTitle 
+              text="THE WORLD'S LARGEST HACKATHON" 
+              className="text-3xl md:text-4xl text-gray-100 mb-0"
+            />
+          </Link>
           <Nav variant="dark" />
         </div>
       </header>
@@ -258,4 +260,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+} 

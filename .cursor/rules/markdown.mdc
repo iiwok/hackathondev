@@ -1,0 +1,54 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Hackathon Website PRD
+
+## 1. Purpose & Vision
+The goal of this website is to **showcase information about a hackathon** and display submitted projects dynamically. The design should be **modern, futuristic, and visually engaging** with a **dark theme** where headings and images pop.
+
+## 2. Core Features & Functionality
+
+### Informational Pages
+- **Homepage**: Overview of the hackathon, including title, dates, and a call to action.
+- **Events Page**: Schedule, speakers, and key sessions.
+- **About Page**: Details about the hackathon's mission, judges, sponsors, and partners.
+- **Projects Page**: Showcases registered hackathon projects in small preview boxes.
+
+### Project Submission Flow
+A submission form allowing participants to submit their projects:
+- **Form Fields**:
+  - Username
+  - Social link
+  - Project title
+  - Project link
+  - Description
+  - Image upload (use dummy images for now; vary in colors for differentiation)
+- **Display Mechanism**:
+  - Once submitted, projects appear dynamically on the **Projects Page** in a grid format.
+  - Each project box should include the project title, image, and a short description.
+
+### Tech Stack
+- **Frontend**: Next.js
+- **Backend & Database**: Supabase (to handle project submissions)
+- **Hosting**: Vercel (recommended)
+- **Styling**: Custom CSS/Tailwind
+
+## 3. Design & UX Requirements
+- **Theme**: Dark background with modern and futuristic accents.
+- **Visuals**: Headings and images should pop with neon-like effects and vibrant colors.
+- **Responsiveness**: Mobile-responsive design to ensure optimal viewing on all devices.
+- **Accessibility**: High contrast visuals for readability and engagement.
+
+## 4. Technical Requirements
+- **Dynamic Rendering**: Use Supabase to dynamically render submitted projects.
+- **Real-time Updates**: Enable real-time updates for new project submissions.
+- **Performance**: Optimize performance using Next.js static site generation (SSG) where applicable.
+- **SEO**: Implement basic SEO setup for discoverability.
+
+## 5. Timeline & Milestones
+- **Day 1-2**: Build the core pages (Home, About, Events, Projects).
+- **Day 3**: Implement the project submission flow.
+- **Day 4-5**: Apply styling based on the design inspirations.
+- **Day 6**: Conduct testing, bug fixes, and finalize deployment.
