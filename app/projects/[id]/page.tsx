@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import supabase from '@/utils/supabase';
-import { Project } from '@/types/types';
 import { notFound } from 'next/navigation';
+import { Project } from '@/types/types';
 
 // This makes the page dynamic to ensure we always get fresh data
 export const dynamic = 'force-dynamic';
@@ -10,14 +9,7 @@ export const dynamic = 'force-dynamic';
 export default async function ProjectDetailPage({ params }: { params: { id: string } }) {
   const projectId = parseInt(params.id);
   
-  // Fetch project from Supabase
-  const { data: project, error } = await supabase
-    .from('projects')
-    .select('*')
-    .eq('id', projectId)
-    .single();
-
-  // Sample project data for development
+  // Sample project data
   const sampleProjects: Record<number, Project> = {
     1: {
       id: 1,
@@ -81,11 +73,11 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
     },
   };
 
-  // Use sample project data if there's an error or no project from Supabase
-  const displayProject = (error || !project) ? sampleProjects[projectId] : project as Project;
+  // Get the project from the sample data
+  const displayProject = sampleProjects[projectId];
 
   // If no project is found, return 404
-  if (!displayProject && !sampleProjects[projectId]) {
+  if (!displayProject) {
     notFound();
   }
 

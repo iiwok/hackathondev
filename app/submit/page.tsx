@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/utils/supabase';
 
 export default function SubmitPage() {
   const router = useRouter();
@@ -45,27 +44,10 @@ export default function SubmitPage() {
     setErrorMessage('');
     
     try {
-      // When Supabase is properly set up, this would save to the database
-      // For now, we'll just simulate a successful submission with a timeout
-      
       // Use a dummy image URL for now based on the project title's first letter
       const colors = ['blue', 'purple', 'pink', 'green', 'yellow'];
       const colorIndex = formData.title.charCodeAt(0) % colors.length;
       const dummyImageUrl = `/sample-${colors[colorIndex]}.jpg`;
-      
-      /* When Supabase is set up, uncomment this code:
-      const { data, error } = await supabase
-        .from('projects')
-        .insert([
-          { 
-            ...formData,
-            image_url: dummyImageUrl,
-            created_at: new Date().toISOString()
-          }
-        ]);
-      
-      if (error) throw error;
-      */
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
